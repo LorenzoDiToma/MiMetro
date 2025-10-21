@@ -19,7 +19,7 @@ struct CreateAccountView: View {
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var showingAlert = false
-    
+        
     var body: some View{
         VStack(spacing: 16){
             
@@ -35,7 +35,7 @@ struct CreateAccountView: View {
                 .cornerRadius(10)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
-                .autocapitalization(.none)
+                .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
             
             SecureField("Password", text: $password)
@@ -102,10 +102,15 @@ struct CreateAccountView: View {
                 showAlert(title: "Errore di registrazione", message: error.localizedDescription)
             }else{
                 print("Utente creato con successo: \(authResult?.user.uid ?? "ID non disponibile")")
-                showAlert(title: "Successo", message: "Account creato con successo!")
+                
+                
                 
             }
         }
         
     }
 }
+
+//#Preview {
+//    CreateAccountView()
+//}
