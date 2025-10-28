@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ProfiloView: View {
-    
+    let userEmail: String
     let onLogout: () -> Void
     
     private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.96)
@@ -21,7 +21,7 @@ struct ProfiloView: View {
                 .padding(.top, 100)
                 
                 // Nome Utente
-                Text("Mario Rossi")
+                Text(userEmail)
                     .font(.title2)
                     .fontWeight(.bold)
                 
@@ -58,10 +58,3 @@ struct ProfiloView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        ProfiloView(onLogout: {
-            print("Preview Logout")
-        })
-    }
-}

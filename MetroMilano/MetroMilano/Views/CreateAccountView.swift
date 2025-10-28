@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 import FirebaseAuth
 import Firebase
-
 struct CreateAccountView: View {
+    @ObservedObject var authManager: AuthManager
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
@@ -30,13 +30,13 @@ struct CreateAccountView: View {
                 .padding(.bottom, 24)
             
             TextField("Email", text: $email)
-                .padding()
-                .background(Color(.systemGray5))
-                .cornerRadius(10)
-                .keyboardType(.emailAddress)
-                .textContentType(.emailAddress)
-                .textInputAutocapitalization(.never)
-                .disableAutocorrection(true)
+                            .padding()
+                            .background(Color(.systemGray5))
+                            .cornerRadius(10)
+                            .keyboardType(.emailAddress)
+                            .textContentType(.emailAddress)
+                            .textInputAutocapitalization(.never) // <- ORA FUNZIONA!
+                            .disableAutocorrection(true)
             
             SecureField("Password", text: $password)
                 .padding()
