@@ -5,6 +5,7 @@ struct HomeView: View {
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     let onLogout: () -> Void
     let userEmail: String
@@ -12,7 +13,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.systemGray6)
+                Color(.systemGroupedBackground) 
                     .ignoresSafeArea()
 
                 ScrollView {
@@ -49,6 +50,7 @@ struct HomeView: View {
                                     name: line.name,
                                     destination: line.destination
                                 )
+                                .foregroundStyle(.primary)
                                 .contentShape(Rectangle())
                             }
                         }
@@ -61,7 +63,11 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        ProfiloView(userEmail: userEmail, onLogout: onLogout)
+                        ProfiloView(
+                            userEmail: userEmail,
+                            onLogout: onLogout,
+                            themeManager: themeManager
+                        )
                     } label: {
                         Image(systemName: "person.circle")
                             .font(.title2)
@@ -92,18 +98,19 @@ struct MetroLineCard: View {
                 Text(name)
                     .font(.headline)
                     .fontWeight(.bold)
+                    .foregroundStyle(color)
                 Text(destination)
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(color)
             }
             Spacer()
         }
         .padding()
-        .background(Color.white)
+        .background(Color(.secondarySystemGroupedBackground))
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.gray.opacity(0.1), lineWidth: 1)
+                .stroke(Color(.separator), lineWidth: 1)
         )
     }
 }
