@@ -9,40 +9,32 @@ import SwiftUI
 
 struct SearchView: View {
     
-    // 1. Riceve i manager come parametri
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
     
     @State private var searchText = ""
 
-    // Definiamo una struttura per i risultati di ricerca
     struct SearchableItem: Identifiable, Hashable {
         let id = UUID()
         let station: StationInfo
         let line: MetroLine
-        let directionIndex: Int // 0 per DirA, 1 per DirB
+        let directionIndex: Int
         
-        // --- INIZIO CORREZIONE ---
-        // Aggiungi queste funzioni per conformarti a Equatable e Hashable
         
         static func == (lhs: SearchableItem, rhs: SearchableItem) -> Bool {
-            // Due item sono uguali se stazione, linea E direzione sono identiche
             return lhs.station == rhs.station &&
                    lhs.line == rhs.line &&
                    lhs.directionIndex == rhs.directionIndex
         }
         
         func hash(into hasher: inout Hasher) {
-            // Combina gli hash delle stesse proprietà usate per l'uguaglianza
             hasher.combine(station)
             hasher.combine(line)
             hasher.combine(directionIndex)
         }
-        // --- FINE CORREZIONE ---
     }
 
-    // Crea l'elenco di tutte le stazioni
     private var allStations: [SearchableItem] {
         var items = [SearchableItem]()
         for line in homeViewModel.metroLines {
@@ -53,11 +45,9 @@ struct SearchView: View {
                 items.append(SearchableItem(station: station, line: line, directionIndex: 1))
             }
         }
-        // Questa riga ora funziona grazie alla correzione qui sopra
         return Array(Set(items)).sorted { $0.station.displayName < $1.station.displayName }
     }
 
-    // Filtra l'elenco in base al testo
     private var filteredStations: [SearchableItem] {
         if searchText.isEmpty {
             return allStations
@@ -72,7 +62,6 @@ struct SearchView: View {
         NavigationStack {
             List(filteredStations) { item in
                 NavigationLink {
-                    // Assicurati che LineDetailView accetti questi manager
                     LineDetailView(
                         line: item.line,
                         initialDirection: item.directionIndex,
@@ -82,7 +71,7 @@ struct SearchView: View {
                 } label: {
                     HStack {
                         Image(systemName: "circle.fill")
-                            .foregroundColor(item.line.getLineColor()) // Usa helper
+                            .foregroundColor(item.line.getLineColor())
                             .font(.subheadline)
                         
                         VStack(alignment: .leading) {
@@ -105,7 +94,7 @@ struct SearchView: View {
                             Image(systemName: isFavorite ? "star.fill" : "star")
                                 .foregroundColor(isFavorite ? .yellow : .gray.opacity(0.4))
                         }
-                        .buttonStyle(PlainButtonStyle()) // Impedisce al link di attivarsi
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
             }
@@ -114,7 +103,6 @@ struct SearchView: View {
         }
     }
     
-    // --- Funzioni Helper per i Preferiti ---
     
     private func createFavoriteItem(from item: SearchableItem) -> FavoriteItem {
         return FavoriteItem(

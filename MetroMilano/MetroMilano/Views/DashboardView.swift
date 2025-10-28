@@ -2,17 +2,12 @@ import SwiftUI
 
 struct HomeView: View {
     
-    // 1. MODIFICA: Accetta i manager passati da MainTabView
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
     
-    // Queste le avevi già per la ProfiloView
     let onLogout: () -> Void
     let userEmail: String
-
-    // 2. MODIFICA: Rimossa la creazione del ViewModel
-    // @StateObject private var viewModel = HomeViewModel() // RIMOSSA
 
     var body: some View {
         NavigationStack {
@@ -23,15 +18,12 @@ struct HomeView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         
-                        // 3. MODIFICA: Usa homeViewModel
                         ForEach(homeViewModel.metroLines) { line in
                             Menu {
-                                // --- Opzione 1: Link per Direzione A ---
                                 NavigationLink {
-                                    // 4. MODIFICA: Passa i manager
                                     LineDetailView(
                                         line: line,
-                                        initialDirection: 0, // Passa 0 per Dir A
+                                        initialDirection: 0,
                                         authManager: authManager,
                                         favoritesManager: favoritesManager
                                     )
@@ -39,12 +31,10 @@ struct HomeView: View {
                                     Label(line.dirA_Title, systemImage: "arrow.right.circle")
                                 }
 
-                                // --- Opzione 2: Link per Direzione B ---
                                 NavigationLink {
-                                    // 4. MODIFICA: Passa i manager
                                     LineDetailView(
                                         line: line,
-                                        initialDirection: 1, // Passa 1 per Dir B
+                                        initialDirection: 1,
                                         authManager: authManager,
                                         favoritesManager: favoritesManager
                                     )
@@ -53,10 +43,8 @@ struct HomeView: View {
                                 }
 
                             } label: {
-                                // --- Etichetta del Menu: La nostra Card ---
                                 MetroLineCard(
                                     line: line.line,
-                                    // 4. MODIFICA: Usa la funzione helper per il colore
                                     color: line.getLineColor(),
                                     name: line.name,
                                     destination: line.destination
@@ -85,7 +73,6 @@ struct HomeView: View {
     }
 }
 
-// MetroLineCard rimane invariata
 struct MetroLineCard: View {
     let line: String
     let color: Color
@@ -121,7 +108,3 @@ struct MetroLineCard: View {
     }
 }
 
-// --- Anteprima per Xcode ---
-//#Preview {
-//    HomeView()
-//}

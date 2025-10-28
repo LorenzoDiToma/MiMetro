@@ -35,7 +35,7 @@ struct CreateAccountView: View {
                             .cornerRadius(10)
                             .keyboardType(.emailAddress)
                             .textContentType(.emailAddress)
-                            .textInputAutocapitalization(.never) // <- ORA FUNZIONA!
+                            .textInputAutocapitalization(.never) 
                             .disableAutocorrection(true)
             
             SecureField("Password", text: $password)
@@ -111,6 +111,4 @@ struct CreateAccountView: View {
     }
 }
 
-//#Preview {
-//    CreateAccountView()
-//}
+

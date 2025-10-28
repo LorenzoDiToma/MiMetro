@@ -10,16 +10,12 @@ import FirebaseAuth
 
 struct FavoritesView: View {
     
-    // 1. Riceve i manager come parametri
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
     
-    // --- INIZIO CORREZIONE ---
-    // 2. Aggiungi queste proprietà per accettare gli argomenti extra
     var onLogout: () -> Void
     var userEmail: String
-    // --- FINE CORREZIONE ---
 
     var body: some View {
         NavigationStack {
@@ -28,7 +24,6 @@ struct FavoritesView: View {
                     .foregroundStyle(.secondary)
                     .padding()
                     .navigationTitle("Preferiti")
-                    // Aggiungo la toolbar anche qui per coerenza
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             NavigationLink {
@@ -43,10 +38,8 @@ struct FavoritesView: View {
             } else {
                 List {
                     ForEach(favoritesManager.favoriteItems) { item in
-                        // Cerca la linea e la direzione corrispondenti
                         if let (line, directionIndex) = findLineAndDirection(for: item) {
                             NavigationLink {
-                                // Passa i manager alla vista Dettaglio
                                 LineDetailView(
                                     line: line,
                                     initialDirection: directionIndex,
@@ -70,10 +63,9 @@ struct FavoritesView: View {
                             }
                         }
                     }
-                    .onDelete(perform: deleteFavorite) // Abilita swipe-to-delete
+                    .onDelete(perform: deleteFavorite)
                 }
                 .navigationTitle("Preferiti")
-                // Aggiungo la toolbar anche qui
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
@@ -97,7 +89,6 @@ struct FavoritesView: View {
         }
     }
     
-    // Trova la MetroLine e la direzione da un FavoriteItem
     private func findLineAndDirection(for item: FavoriteItem) -> (MetroLine, Int)? {
         for line in homeViewModel.metroLines {
             if line.dirA_doc_feriale == item.doc_id_feriale {

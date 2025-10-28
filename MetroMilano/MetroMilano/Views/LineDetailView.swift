@@ -7,21 +7,15 @@
 
 import SwiftUI
 import Combine
-import FirebaseFirestore // Assicurati di avere 'FirebaseFirestore' e 'FirebaseAuth' importati dove servono
+import FirebaseFirestore
 import FirebaseAuth
 
-// Assicurati che la struct 'StationInfo' sia definita SOLO in 'HomeViewModel.swift'
-// e NON qui, per evitare l'errore 'Invalid redeclaration'.
 
 struct LineDetailView: View {
 
     @StateObject private var viewModel = ScheduleViewModel()
-    
-    // --- 1. ACCESSO AI MANAGER GLOBALI ---
-    // Questi manager devono essere passati da MetroMilanoOldApp.swift
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
-    // Parametri passati dalla vista precedente
     let line: MetroLine
     @State private var selectedDirectionIndex: Int
     @State private var currentTime = Date()
@@ -29,7 +23,6 @@ struct LineDetailView: View {
 
     let maxLookaheadMinutes: Double = 10.0
 
-    // Init per impostare la direzione iniziale
     init(line: MetroLine, initialDirection: Int = 0, authManager: AuthManager, favoritesManager: FavoritesManager) {
             self.line = line
             _selectedDirectionIndex = State(initialValue: initialDirection)
@@ -37,7 +30,6 @@ struct LineDetailView: View {
             self.favoritesManager = favoritesManager
         }
 
-    // Variabili Calcolate (per pulizia codice)
     private var currentDirectionTitle: String { selectedDirectionIndex == 0 ? line.dirA_Title : line.dirB_Title }
     private var currentStations: [StationInfo] { selectedDirectionIndex == 0 ? line.stationsDirA : line.stationsDirB }
     private var currentDocumentToFetch: String {
@@ -46,7 +38,6 @@ struct LineDetailView: View {
         else { return isFeriale ? line.dirB_doc_feriale : line.dirB_doc_festivo }
     }
 
-    // --- BODY DELLA VISTA ---
     var body: some View {
         VStack(spacing: 0) {
             // Picker (invariato)
@@ -59,7 +50,6 @@ struct LineDetailView: View {
             .background(Color(.systemGray6))
             .onChange(of: selectedDirectionIndex) { _ in fetchDataForCurrentSelection() }
 
-            // Elenco fermate
             ScrollView {
                 if viewModel.isLoading { ProgressView().padding(.top, 50) }
                 else if viewModel.scheduleData.isEmpty && !viewModel.isLoading {
@@ -74,7 +64,6 @@ struct LineDetailView: View {
                             let isFavorite = favoritesManager.isFavorite(item: favoriteItem)
 
                             HStack(spacing: 16) {
-                                // Cerchio riempimento (invariato)
                                 ArrivalCircleView(
                                     fillAmount: arrivalInfo.fillAmount,
                                     color: line.getLineColor()
@@ -90,14 +79,11 @@ struct LineDetailView: View {
                                         .foregroundColor(.secondary)
                                 }
                                 
-                                Spacer() // Spinge la stella a destra
+                                Spacer()
 
-                                // --- 3. PULSANTE PREFERITI (STELLA) ---
                                 Button {
-                                    // Controlla di avere l'UID dell'utente
                                     guard let uid = authManager.user?.uid else { return }
                                     
-                                    // Aggiunge o rimuove dal manager
                                     if isFavorite {
                                         favoritesManager.removeFavorite(item: favoriteItem, uid: uid)
                                     } else {
@@ -108,7 +94,7 @@ struct LineDetailView: View {
                                         .font(.title3)
                                         .foregroundColor(isFavorite ? .yellow : .gray.opacity(0.4))
                                 }
-                                .animation(.bouncy(duration: 0.3), value: isFavorite) // Piccola animazione
+                                .animation(.bouncy(duration: 0.3), value: isFavorite)
                             }
                         }
                     }
@@ -118,19 +104,17 @@ struct LineDetailView: View {
         }
         .navigationTitle(currentDirectionTitle)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { fetchDataForCurrentSelection() } // Carica i dati la prima volta
-        .onReceive(timer) { inputDate in currentTime = inputDate } // Aggiorna l'ora
+        .onAppear { fetchDataForCurrentSelection() }
+        .onReceive(timer) { inputDate in currentTime = inputDate }
     }
 
-    // --- FUNZIONI LOGICHE ---
+// --------------------- FUNZIONI LOGICHE ----------------------------
 
-    // Chiede al ViewModel di scaricare i dati per il documento Firestore corretto
     private func fetchDataForCurrentSelection() {
         print("Richiesta dati per: \(currentDocumentToFetch)")
         viewModel.fetchSchedule(documentID: currentDocumentToFetch)
     }
     
-    // Crea un oggetto FavoriteItem basato sullo stato attuale della vista
     private func createFavoriteItem(from station: StationInfo) -> FavoriteItem {
         return FavoriteItem(
             station_dbName: station.dbName,
@@ -144,7 +128,6 @@ struct LineDetailView: View {
         )
     }
 
-    // Calcola l'orario (invariato)
     private func calculateNextArrival(forDbName dbStationName: String, now: Date) -> (displayText: String, fillAmount: CGFloat) {
         guard let stationTimes = viewModel.scheduleData[dbStationName] else {
             print("DBG: Dati non trovati per il dbName: '\(dbStationName)'")
@@ -153,7 +136,6 @@ struct LineDetailView: View {
         return findNextTime(from: stationTimes, now: now, maxMinutes: maxLookaheadMinutes)
     }
 
-    // Trova l'orario (invariato)
     private func findNextTime(from stationTimes: [String], now: Date, maxMinutes: Double) -> (displayText: String, fillAmount: CGFloat) {
         let calendar = Calendar.current
         let timeFormatter = DateFormatter()
@@ -189,7 +171,6 @@ struct LineDetailView: View {
     }
 }
 
-// --- VISTA PER IL CERCHIO (Invariata) ---
 struct ArrivalCircleView: View {
     let fillAmount: CGFloat
     let color: Color
