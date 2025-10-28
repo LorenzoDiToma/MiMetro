@@ -1,33 +1,42 @@
-//
-//  MetroMilanoApp.swift
-//  MetroMilano
-//
-//  Created by s16 on 07/10/25.
-//
-
 import SwiftUI
-import Firebase
+import FirebaseCore
+import FirebaseAuth
 
 @main
-struct MetroMilanoApp: App {
+struct MetroMilanoOldApp: App {
+    
+    @StateObject private var authManager = AuthManager()
+    @StateObject private var favoritesManager = FavoritesManager()
+    @StateObject private var homeViewModel = HomeViewModel()
     
     init(){
         FirebaseApp.configure()
     }
     
-    @StateObject private var authManager = AuthManager()
-    
     var body: some Scene {
         WindowGroup {
             
             if authManager.user != nil {
-                HomeView()
-                    .environmentObject(authManager)
-            }else {
-                ContentView()
-                    .environmentObject(authManager)
+                
+                MainTabView(
+                    authManager: authManager,
+                    favoritesManager: favoritesManager,
+                    homeViewModel: homeViewModel,
+                    
+                    // AGGIUNGI QUESTI DUE
+                    onLogout: { authManager.signOut() },
+                    userEmail: authManager.user?.email ?? "N/A"
+                )
+                .onAppear {
+                    // Carichiamo i preferiti quando l'app (loggata) appare
+                    if let uid = authManager.user?.uid {
+                        favoritesManager.fetchFavorites(uid: uid)
+                    }
+                }
+                
+            } else {
+                ContentView(authManager: authManager)
             }
-            
         }
     }
 }

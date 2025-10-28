@@ -10,10 +10,15 @@
 //git push origin main
 
 
+
 import SwiftUI
 
 
 struct ContentView: View {
+    
+    // 1. AGGIUNGI QUESTA RIGA per "accettare" l'authManager
+    @ObservedObject var authManager: AuthManager
+    
     var body: some View {
         NavigationStack{
             VStack(spacing: 10) {
@@ -25,7 +30,8 @@ struct ContentView: View {
                     .font(.title2)
                 Spacer()
                 VStack(spacing: 15){
-                    NavigationLink(destination: LoginView()){
+                    // 2. PASSA l'authManager a LoginView
+                    NavigationLink(destination: LoginView(authManager: authManager)){ // <-- MODIFICA QUI
                         Text("Login")
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity)
@@ -34,7 +40,8 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .cornerRadius(12)
                     }
-                    NavigationLink(destination: CreateAccountView()){
+                    // 3. PASSA l'authManager a CreateAccountView
+                    NavigationLink(destination: CreateAccountView(authManager: authManager)){ // <-- MODIFICA QUI
                             Text("Sign Up")
                             .fontWeight(.bold)
                             .frame(maxWidth: .infinity)
@@ -53,8 +60,4 @@ struct ContentView: View {
         }
         
     }
-}
-
-#Preview {
-    ContentView()
 }

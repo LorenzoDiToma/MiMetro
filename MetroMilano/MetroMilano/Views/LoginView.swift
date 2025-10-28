@@ -10,7 +10,7 @@ import Firebase
 import FirebaseAuth
 
 struct LoginView: View{
-    
+    @ObservedObject var authManager: AuthManager
     @State private var email = ""
     @State private var password = ""
     
@@ -57,14 +57,14 @@ struct LoginView: View{
                 )
                 .textContentType(.password)
             
-            Button(action: signInUser){
-                Text("Log In")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.black)
-                    .cornerRadius(10)
+            Button(action: signInUser) {
+                            Text("Log In")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.black)
+                                .cornerRadius(10)
             }
             
             Spacer()
@@ -73,9 +73,9 @@ struct LoginView: View{
                 Text("Non hai un account?")
                     .foregroundColor(.gray)
                 
-                NavigationLink("Sign Up", destination: CreateAccountView())
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
+                NavigationLink("Sign Up", destination: CreateAccountView(authManager: authManager))
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
             }
             .font(.footnote)
         }
@@ -114,10 +114,3 @@ struct LoginView: View{
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            LoginView()
-        }
-    }
-}
