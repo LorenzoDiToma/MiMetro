@@ -9,31 +9,27 @@ import SwiftUI
 
 struct MainTabView: View {
     
-    // 1. I manager che già ricevi
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
     
-    // 2. AGGIUNGI QUESTE per accettare i parametri mancanti
     var onLogout: () -> Void
     var userEmail: String
 
     var body: some View {
         TabView {
             
-            // --- Tab 1: Linee ---
             HomeView(
                 authManager: authManager,
                 favoritesManager: favoritesManager,
                 homeViewModel: homeViewModel,
-                onLogout: onLogout,  // <-- PASSALO QUI
-                userEmail: userEmail // <-- E QUI
+                onLogout: onLogout,
+                userEmail: userEmail
             )
             .tabItem {
                 Label("Linee", systemImage: "list.bullet")
             }
             
-            // --- Tab 2: Cerca ---
             SearchView(
                 authManager: authManager,
                 favoritesManager: favoritesManager,
@@ -43,19 +39,18 @@ struct MainTabView: View {
                 Label("Cerca", systemImage: "magnifyingglass")
             }
 
-            // --- Tab 3: Preferiti ---
             FavoritesView(
                 authManager: authManager,
                 favoritesManager: favoritesManager,
                 homeViewModel: homeViewModel,
-                onLogout: onLogout,  // <-- PASSALO QUI
-                userEmail: userEmail // <-- E QUI
+                onLogout: onLogout,
+                userEmail: userEmail
             )
             .tabItem {
                 Label("Preferiti", systemImage: "star.fill")
             }
         }
-        .accentColor(.red) // Colore della tab selezionata
+        .accentColor(.red) 
     }
 }
 

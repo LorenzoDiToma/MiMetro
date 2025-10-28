@@ -28,7 +28,6 @@ struct MetroMilanoOldApp: App {
                     userEmail: authManager.user?.email ?? "N/A"
                 )
                 .onAppear {
-                    // Carichiamo i preferiti quando l'app (loggata) appare
                     if let uid = authManager.user?.uid {
                         favoritesManager.fetchFavorites(uid: uid)
                     }

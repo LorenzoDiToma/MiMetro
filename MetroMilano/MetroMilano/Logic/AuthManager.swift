@@ -30,8 +30,6 @@ class AuthManager: ObservableObject {
         }
     }
     
-    // --- CORREZIONE QUI ---
-    // Era "singOut", l'ho corretto in "signOut"
     public func signOut() {
         do {
             try Auth.auth().signOut()

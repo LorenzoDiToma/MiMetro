@@ -19,7 +19,7 @@ struct CustomProfileButton: View {
             HStack {
                 Image(systemName: iconName)
                     .font(.system(size: 20, weight: .regular))
-                    .frame(width: 30) // Per allineamento
+                    .frame(width: 30)
                 
                 Text(title)
                     .fontWeight(.bold)
@@ -31,8 +31,8 @@ struct CustomProfileButton: View {
             .padding()
             .frame(maxWidth: .infinity)
             .background(buttonColor)
-            .foregroundColor(.white) // Testo bianco su sfondo nero/rosso
-            .cornerRadius(12) // Angoli arrotondati come nel tuo tema
+            .foregroundColor(.white)
+            .cornerRadius(12)
             .padding(.vertical, 5)
         }
     }
