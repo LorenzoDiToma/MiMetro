@@ -20,7 +20,7 @@ class ScheduleViewModel: ObservableObject {
     func fetchSchedule(documentID: String) {
                 
         self.isLoading = true
-        self.scheduleData = [:] // Svuota i dati vecchi
+        self.scheduleData = [:] 
         
         let docRef = db.collection("orari").document(documentID)
         
