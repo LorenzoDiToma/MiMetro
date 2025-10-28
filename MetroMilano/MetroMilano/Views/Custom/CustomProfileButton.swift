@@ -21,7 +21,7 @@ struct CustomProfileButton<Destination: View>: View {
     init(title: String, iconName: String, buttonColor: Color, @ViewBuilder destination: () -> Destination) {
         self.title = title
         self.iconName = iconName
-        self.action = nil // Nessuna azione
+        self.action = nil 
         self.buttonColor = buttonColor
         self.destinationView = destination()
     }
