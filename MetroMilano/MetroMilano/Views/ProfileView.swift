@@ -3,14 +3,14 @@ import SwiftUI
 struct ProfiloView: View {
     let userEmail: String
     let onLogout: () -> Void
-    
+
     private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.96)
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                
-                ZStack {
+
+                 ZStack {
                     Circle()
                         .fill(Color(.systemGray5))
                         .frame(width: 120, height: 120)
@@ -19,34 +19,30 @@ struct ProfiloView: View {
                         .foregroundColor(Color(.systemGray))
                 }
                 .padding(.top, 100)
-                
-                // Nome Utente
                 Text(userEmail)
                     .font(.title2)
                     .fontWeight(.bold)
-                
+
+
                 Spacer()
                     .frame(height: 250)
-                
+
                 CustomProfileButton(
                     title: "Log Out",
                     iconName: "lock.slash.fill",
-                    action: {
+                    action: { 
                         onLogout()
                     },
                     buttonColor: .red
                 )
-                
-                // Pulsante Settings (Impostazioni)
+
                 CustomProfileButton(
                     title: "Settings",
                     iconName: "gearshape.fill",
-                    action: {
-                        print("Vai alla schermata Impostazioni (Placeholder)")
-                    },
-                    buttonColor: .black
+                    buttonColor: .black,
+                    destination: {SettingsView()}
                 )
-                
+
                 Spacer()
             }
             .padding(.horizontal)
@@ -55,6 +51,7 @@ struct ProfiloView: View {
         .background(backgroundColor.ignoresSafeArea(.all, edges: .bottom))
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
