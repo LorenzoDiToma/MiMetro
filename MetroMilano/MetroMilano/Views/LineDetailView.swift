@@ -48,7 +48,7 @@ struct LineDetailView: View {
             .pickerStyle(.segmented)
             .padding([.horizontal, .bottom])
             .background(Color(.systemGray6))
-            .onChange(of: selectedDirectionIndex) { _ in fetchDataForCurrentSelection() }
+            .onChange(of: selectedDirectionIndex) { fetchDataForCurrentSelection() }
 
             ScrollView {
                 if viewModel.isLoading { ProgressView().padding(.top, 50) }
