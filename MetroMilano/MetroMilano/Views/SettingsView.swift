@@ -19,8 +19,8 @@ struct SettingsView: View {
                         Text(theme.displayName).tag(theme)
                     }
                 }
-                .onChange(of: themeManager.selectedTheme) { newTheme in
-                    themeManager.setTheme(newTheme)
+                .onChange(of: themeManager.selectedTheme) { oldValue, newValue in
+                    themeManager.setTheme(newValue)
                 }
             }
         }

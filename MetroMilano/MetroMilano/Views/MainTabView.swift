@@ -1,10 +1,3 @@
-//
-//  MainTabView.swift
-//  MetroMilano
-//
-//  Created by s16 on 28/10/25.
-//
-
 import SwiftUI
 
 struct MainTabView: View {
@@ -54,5 +47,3 @@ struct MainTabView: View {
         .accentColor(.red)
     }
 }
-
-
