@@ -13,8 +13,6 @@ struct LoginView: View{
     @ObservedObject var authManager: AuthManager
     @State private var email = ""
     @State private var password = ""
-    
-    //stato per gli avvisi
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var showingAlert = false

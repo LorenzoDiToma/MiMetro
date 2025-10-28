@@ -12,6 +12,7 @@ struct SearchView: View {
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     @State private var searchText = ""
 

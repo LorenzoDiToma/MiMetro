@@ -40,7 +40,6 @@ struct LineDetailView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Picker (invariato)
             Picker("Direzione", selection: $selectedDirectionIndex) {
                 Text(line.dirA_Title).tag(0)
                 Text(line.dirB_Title).tag(1)

@@ -13,6 +13,7 @@ struct FavoritesView: View {
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     var onLogout: () -> Void
     var userEmail: String
@@ -27,7 +28,11 @@ struct FavoritesView: View {
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             NavigationLink {
-                                ProfiloView(userEmail: userEmail, onLogout: onLogout)
+                                ProfiloView(
+                                    userEmail: userEmail,
+                                    onLogout: onLogout,
+                                    themeManager: themeManager
+                                )
                             } label: {
                                 Image(systemName: "person.circle")
                                     .font(.title2)
@@ -69,7 +74,7 @@ struct FavoritesView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
-                            ProfiloView(userEmail: userEmail, onLogout: onLogout)
+                            ProfiloView(userEmail: userEmail, onLogout: onLogout, themeManager: themeManager)
                         } label: {
                             Image(systemName: "person.circle")
                                 .font(.title2)
