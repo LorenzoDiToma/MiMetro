@@ -40,7 +40,6 @@ struct LineDetailView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Picker (invariato)
             Picker("Direzione", selection: $selectedDirectionIndex) {
                 Text(line.dirA_Title).tag(0)
                 Text(line.dirB_Title).tag(1)
@@ -48,7 +47,7 @@ struct LineDetailView: View {
             .pickerStyle(.segmented)
             .padding([.horizontal, .bottom])
             .background(Color(.systemGray6))
-            .onChange(of: selectedDirectionIndex) { _ in fetchDataForCurrentSelection() }
+            .onChange(of: selectedDirectionIndex) { fetchDataForCurrentSelection() }
 
             ScrollView {
                 if viewModel.isLoading { ProgressView().padding(.top, 50) }
@@ -70,7 +69,6 @@ struct LineDetailView: View {
                                 )
                                 .frame(width: 20, height: 20)
 
-                                // Testo nome e minuti (invariato)
                                 VStack(alignment: .leading) {
                                     Text(stationInfo.displayName)
                                         .font(.system(size: 18, weight: .bold))
@@ -120,9 +118,8 @@ struct LineDetailView: View {
             station_dbName: station.dbName,
             station_displayName: station.displayName,
             line_name: line.name,
-            line_color_hex: line.colorHex, // Usa la funzione helper
+            line_color_hex: line.colorHex, 
             direction_title: currentDirectionTitle,
-            // Scegli i doc ID giusti in base alla direzione selezionata
             doc_id_feriale: selectedDirectionIndex == 0 ? line.dirA_doc_feriale : line.dirB_doc_feriale,
             doc_id_festivo: selectedDirectionIndex == 0 ? line.dirA_doc_festivo : line.dirB_doc_festivo
         )

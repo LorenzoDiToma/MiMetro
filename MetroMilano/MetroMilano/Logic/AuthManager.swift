@@ -1,5 +1,5 @@
 //
-//  AuthManager.swift // Ti suggerisco di rinominare il file in AuthManager.swift
+//  AuthManager.swift 
 //  MetroMilano
 //
 //  Created by s16 on 21/10/25.

@@ -14,8 +14,6 @@ struct CreateAccountView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    
-    //stati di errore
     @State private var alertTitle = ""
     @State private var alertMessage = ""
     @State private var showingAlert = false

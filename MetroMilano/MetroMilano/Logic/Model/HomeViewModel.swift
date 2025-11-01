@@ -233,7 +233,7 @@ struct MetroLine: Identifiable, Hashable {
                 destination: "San Donato ↔ Comasina",
                 // Direzione A: Verso San Donato
                 dirA_Title: "San Donato",
-                dirA_doc_feriale: "m3_dir_sandonato_feriale", // Assumendo dir 0
+                dirA_doc_feriale: "m3_dir_sandonato_feriale", 
                 dirA_doc_festivo: "m3_dir_sandonato_festivo",
                 stationsDirA: [
                     StationInfo(dbName: "COMASINA", displayName: "Comasina"),

@@ -12,6 +12,7 @@ struct SearchView: View {
     @ObservedObject var authManager: AuthManager
     @ObservedObject var favoritesManager: FavoritesManager
     @ObservedObject var homeViewModel: HomeViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     @State private var searchText = ""
 
@@ -84,7 +85,6 @@ struct SearchView: View {
                         
                         Spacer()
                         
-                        // Pulsante Preferiti
                         let favoriteItem = createFavoriteItem(from: item)
                         let isFavorite = favoritesManager.isFavorite(item: favoriteItem)
                         
@@ -109,7 +109,7 @@ struct SearchView: View {
             station_dbName: item.station.dbName,
             station_displayName: item.station.displayName,
             line_name: item.line.name,
-            line_color_hex: item.line.colorHex, // Usa la proprietà stringa
+            line_color_hex: item.line.colorHex, 
             direction_title: item.directionIndex == 0 ? item.line.dirA_Title : item.line.dirB_Title,
             doc_id_feriale: item.directionIndex == 0 ? item.line.dirA_doc_feriale : item.line.dirB_doc_feriale,
             doc_id_festivo: item.directionIndex == 0 ? item.line.dirA_doc_festivo : item.line.dirB_doc_festivo
