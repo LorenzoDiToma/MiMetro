@@ -1,4 +1,3 @@
-
 # Xcode
 .DS_Store
 build/
@@ -26,3 +25,9 @@ GoogleService-Info.plist
 __pycache__/
 *.pyc
 .env
+
+# Large GTFS files
+UploaderGTFS/stop_times.txt
+
+# Firebase Service Account Key
+UploaderGTFS/serviceAccountKey.json
