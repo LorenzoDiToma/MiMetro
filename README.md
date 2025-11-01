@@ -10,7 +10,6 @@
 - [📍 Panoramica](#-panoramica)
 - [🛠️ Tecnologie Utilizzate](#️-tecnologie-utilizzate)
 - [⚙️ Installazione e Avvio](#️-installazione-e-avvio)
-- [🖼️ Screenshot](#️-screenshot)
 - [✍️ Autore](#️-autore)
 
 ---
@@ -40,18 +39,6 @@ Guida passo-passo per far partire il progetto in locale.
 
 3.  **Avvia l'applicazione**
     Premi il pulsante "Run" (▶) in Xcode per avviare il simulatore di un iPhone.
-
-## 🖼️ Screenshot
-
-*Nota: Aggiungi qui i tuoi screenshot. Carica i file nella cartella `/assets` e decommenta le righe sottostanti, assicurandoti che i nomi dei file corrispondano.*
-
-<!--
-![Schermata di Login](./assets/login-screen.png)
-*Schermata di login e registrazione.*
-
-![Stato delle Linee](./assets/status-screen.png)
-*Schermata principale con lo stato delle linee della metro.*
--->
 
 ## ✍️ Autore
 
